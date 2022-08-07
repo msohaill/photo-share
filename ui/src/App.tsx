@@ -3,7 +3,7 @@ import './App.css';
 import socketClient from 'socket.io-client';
 import Compressor from 'compressorjs';
 
-const server = 'https://api-photo-shared.herokuapp.com';
+const server = process.env.REACT_APP_APP_SERVER || 'http://localhost:8080';
 const socket = socketClient(server, { withCredentials: true });
 
 type TempImage = {
@@ -73,7 +73,7 @@ function App() {
       <header className='App-header'>
         <div>
           {Object.values(images).map((e) => (
-            <img key={e} alt={e} style={{ maxHeight: '300px' }} src={e} />
+            <img key={e} alt={e} style={{ maxHeight: '200px' }} src={e} />
           ))}
         </div>
         <input type='file' name='image' multiple={false} accept='image/*' onChange={handleImageChange} />
