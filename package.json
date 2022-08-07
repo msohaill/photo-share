@@ -28,10 +28,10 @@
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,md,scss}": [
+    "*.{ts,tsx,json,md,scss}": [
       "prettier --write"
     ],
-    "*.{ts,tsx,js,jsx}": [
+    "*.{ts,tsx}": [
       "eslint ."
     ]
   }

@@ -31,7 +31,7 @@ app.post('/images', async (req, res) => {
     cloudinary.uploader.upload(req.body.image, { public_id: nanoid() }, (err, imgRes) => {
       if (err || !imgRes) throw new Error('Dang');
 
-      res.json({ imageUrl: imgRes.secure_url, publicId: imgRes.public_id });
+      res.json({ url: imgRes.secure_url, publicId: imgRes.public_id });
     });
   }
 });
