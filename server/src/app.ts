@@ -28,7 +28,7 @@ http.listen(env.port, () => {
 });
 
 io.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log('New client connectesd');
   socket.emit('connection', null);
 
   imageHandler(io, socket);

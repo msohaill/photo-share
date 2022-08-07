@@ -52,11 +52,15 @@ function App() {
           };
 
           fetch(`${server}/images`, opts)
-            .then((response) => response.json())
+            .then((response) => {
+              if (response.ok) return response.json();
+              else throw new Error('Could not upload image');
+            })
             .then((data: TempImage) => {
               socket.emit('image', { url: data.url, publicId: data.publicId });
               setImages((prevImages) => ({ ...prevImages, [data.publicId]: data.url }));
-            });
+            })
+            .catch((err) => console.log(err));
         };
 
         reader.readAsDataURL(res);
@@ -69,7 +73,7 @@ function App() {
       <header className='App-header'>
         <div>
           {Object.values(images).map((e) => (
-            <img key={e} alt={e} style={{ maxHeight: '200px' }} src={e} />
+            <img key={e} alt={e} style={{ maxHeight: '300px' }} src={e} />
           ))}
         </div>
         <input type='file' name='image' multiple={false} accept='image/*' onChange={handleImageChange} />

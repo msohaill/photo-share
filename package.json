@@ -32,7 +32,7 @@
       "prettier --write"
     ],
     "*.{ts,tsx}": [
-      "eslint ."
+      "eslint"
     ]
   }
 }
