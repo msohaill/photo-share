@@ -29,7 +29,7 @@ app.post('/images', async (req, res) => {
     res.json({ status: false, message: 'No file uploaded' });
   } else {
     cloudinary.uploader.upload(req.body.image, { public_id: nanoid() }, (err, imgRes) => {
-      if (err || !imgRes) throw new Error("Dang");
+      if (err || !imgRes) throw new Error('Dang');
 
       res.json({ imageUrl: imgRes.secure_url, publicId: imgRes.public_id });
     });
@@ -40,15 +40,15 @@ http.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
 });
 
-io.on("connection", socket => {
-  console.log("New client connected");
+io.on('connection', (socket) => {
+  console.log('New client connected');
   socket.emit('connection', null);
-  socket.on("image", (img: TempImage) => {
-    socket.broadcast.emit("image", img);
+  socket.on('image', (img: TempImage) => {
+    socket.broadcast.emit('image', img);
     setTimeout(() => {
-      io.emit("delete image", img.publicId);
+      io.emit('delete image', img.publicId);
       cloudinary.uploader.destroy(img.publicId);
     }, 30000);
-  })
-  socket.on('disconnect', () => console.log("User disconnected."))
+  });
+  socket.on('disconnect', () => console.log('User disconnected.'));
 });
