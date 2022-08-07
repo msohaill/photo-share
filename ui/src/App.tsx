@@ -3,7 +3,7 @@ import './App.css';
 import socketClient from 'socket.io-client';
 import Compressor from 'compressorjs';
 
-const server = '/api';
+const server = 'https://api-photo-shared.herokuapp.com';
 const socket = socketClient(server, { withCredentials: true });
 
 type TempImage = {

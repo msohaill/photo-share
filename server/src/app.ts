@@ -21,7 +21,7 @@ app.use(loggerMiddleware);
 const http = createServer(app);
 const io = new Server(http, { cors: { origin: true, credentials: true } });
 
-app.use('/api/images', imageController);
+app.use('/images', imageController);
 
 http.listen(env.port, () => {
   console.log(`🌲 Server is running at https://localhost:${env.port}`);
