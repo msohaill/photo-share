@@ -3,7 +3,7 @@ import './App.css';
 import socketClient from 'socket.io-client';
 import Compressor from 'compressorjs';
 
-const server = process.env.REACT_APP_APP_SERVER || 'http://localhost:8080';
+const server = '/api';
 const socket = socketClient(server, { withCredentials: true });
 
 type TempImage = {
