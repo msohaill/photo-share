@@ -24,14 +24,14 @@ const io = new Server(http, { cors: { origin: true, credentials: true } });
 app.use('/images', imageController);
 
 http.listen(env.port, () => {
-  console.log(`🌲 Server is running at https://localhost:${env.port}`);
+  console.log(`🐳 Server is running at https://localhost:${env.port}`);
 });
 
 io.on('connection', (socket) => {
   console.log('New client connectesd');
   socket.emit('connection', null);
 
-  imageHandler(io, socket);
+  imageHandler(socket);
 
   socket.on('disconnect', () => console.log('User disconnected.'));
 });

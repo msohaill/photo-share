@@ -35,3 +35,6 @@ rules:
     - off
   no-unused-vars:
     - error
+  jsx-quotes:
+    - error
+    - prefer-single
