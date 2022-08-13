@@ -1,29 +1,33 @@
 import { useEffect, useState } from 'react';
-import './App.css';
-import 'leaflet/dist/leaflet.css';
+import './App.scss';
 import socketClient from 'socket.io-client';
 import Compressor from 'compressorjs';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import logo from './assets/images/thousandwords.png';
+import Header from './components/Header';
+import Map from './components/Map';
+import FileDrawer from './components/FileDrawer';
 
 const server = process.env.REACT_APP_APP_SERVER || 'http://localhost:8080';
 const socket = socketClient(server, { withCredentials: true });
 
-type TempImage = {
+type Image = {
   publicId: string;
   url: string;
+  location: {
+    lat: number;
+    lon: number;
+  };
 };
 
 function App() {
-  const [images, setImages] = useState<{ [key: string]: string }>({});
+  const [images, setImages] = useState<{ [key: string]: { url: string; location: { lat: number; lon: number } } }>({});
 
   useEffect(() => {
     socket.on('connection', () => {
       console.log('Connected with the backend');
     });
 
-    socket.on('image', (img: TempImage) => {
-      setImages((prevImages) => ({ ...prevImages, [img.publicId]: img.url }));
+    socket.on('image', (img: Image) => {
+      setImages((prevImages) => ({ ...prevImages, [img.publicId]: { url: img.url, location: img.location } }));
       setTimeout(
         () =>
           setImages((prevImages) => {
@@ -35,17 +39,13 @@ function App() {
       );
     });
 
-    document.querySelector('.leaflet-pane .leaflet-popup-pane')?.addEventListener('click', (event) => {
-      event.preventDefault();
-    });
-
     return () => {
       socket.off('connection');
       socket.off('image');
     };
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
 
     const file = e.target.files[0];
@@ -67,9 +67,19 @@ function App() {
               if (response.ok) return response.json();
               else throw new Error('Could not upload image');
             })
-            .then((data: TempImage) => {
-              socket.emit('image', { url: data.url, publicId: data.publicId });
-              setImages((prevImages) => ({ ...prevImages, [data.publicId]: data.url }));
+            .then((data: Image) => {
+              const location = {
+                lat: Math.floor(Math.random() * 180) - 90,
+                lon: Math.floor(Math.random() * 360) - 180,
+              };
+
+              socket.emit('image', {
+                url: data.url,
+                publicId: data.publicId,
+                location,
+              });
+
+              setImages((prevImages) => ({ ...prevImages, [data.publicId]: { url: data.url, location } }));
               setTimeout(
                 () =>
                   setImages((prevImages) => {
@@ -89,47 +99,12 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} style={{ maxHeight: 150, maxWidth: '90%', marginTop: -50 }} />
-        <div>
-          {Object.values(images).map((e) => (
-            <img key={e} alt={e} style={{ maxHeight: '200px' }} src={e} />
-          ))}
-        </div>
-        <input
-          style={{ display: 'none' }}
-          type='file'
-          name='image'
-          multiple={false}
-          accept='image/*'
-          onChange={handleImageChange}
-        />
-        <MapContainer
-          id='map'
-          center={[35, 0]}
-          zoom={2}
-          scrollWheelZoom={true}
-          zoomSnap={0.25}
-          maxBounds={[
-            [-90, -180],
-            [90, 180],
-          ]}
-          maxBoundsViscosity={0.9}
-        >
-          <TileLayer
-            url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-            maxZoom={20}
-            minZoom={2}
-            attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-          />
-          <Marker position={[51.505, -0.09]}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        </MapContainer>
-      </header>
+    <div className='app'>
+      <Header />
+
+      <Map images={images} />
+
+      <FileDrawer handleUpload={handleUpload} />
     </div>
   );
 }

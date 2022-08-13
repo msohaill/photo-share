@@ -1,0 +1,66 @@
+.drawer-container {
+  position: fixed;
+  bottom: 0em;
+  right: 1em;
+
+  .drawer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    width: 300px;
+    height: 120px;
+
+    background-color: rgb(24, 26, 28);
+    color: rgb(255, 254, 232);
+
+    transform: translateY(70px);
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+
+    .drawer-close {
+      position: absolute;
+      left: 20px;
+      top: 10px;
+      cursor: pointer;
+    }
+
+    .drawer-open {
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 10pt;
+      height: 50px;
+    }
+
+    #image-upload-label {
+      cursor: pointer;
+      background-color: rgb(207, 96, 89);
+      padding: 10px 30px;
+      transition: background-color 0.1s linear;
+
+      &:hover {
+        background-color: hwb(4 45% 19%);
+      }
+    }
+  }
+}
+
+.slide {
+  transform: none !important;
+}
+
+@media (max-width: 800px) {
+  .drawer-container {
+    right: 50%;
+    transform: translateX(50%);
+
+    .drawer {
+      width: 80vw;
+      max-width: 300px;
+    }
+  }
+}

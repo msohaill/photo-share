@@ -1,0 +1,16 @@
+#map {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(55, 66, 91);
+
+  .country {
+    fill: rgb(24, 26, 28);
+    stroke: rgb(60, 60, 60);
+    stroke-width: 0.2px;
+    outline: none;
+  }
+
+  .img-marker {
+    fill: white;
+  }
+}

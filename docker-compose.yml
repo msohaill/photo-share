@@ -19,6 +19,5 @@ services:
       - "3000:3000"
     volumes:
       - ./ui:/app/
-    command: npm start
     depends_on:
       - server
