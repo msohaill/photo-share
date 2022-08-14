@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './style.scss';
 
 // eslint-disable-next-line no-unused-vars
-const FileDrawer = ({ handleUpload }: { handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const FileDrawer = ({ handleSubmission }: { handleSubmission: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => {
@@ -27,7 +27,7 @@ const FileDrawer = ({ handleUpload }: { handleUpload: (e: React.ChangeEvent<HTML
           <PhotoCameraBack />
           <p>Add a thousand words</p>
         </div>
-        <input type='file' id='image-upload' multiple={false} accept='image/*' onChange={handleUpload} hidden />
+        <input type='file' id='image-upload' multiple={false} accept='image/*' onChange={handleSubmission} hidden />
         <label id='image-upload-label' htmlFor='image-upload'>
           Upload
         </label>

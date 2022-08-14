@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from 'react-simple-maps';
 import './style.scss';
+import hillshade from '../../assets/geodata/hillshade.json';
+import { StoredImage } from '../../App';
 
 type Props = {
-  images: { [key: string]: { url: string; location: { lat: number; lon: number } } };
+  images: StoredImage;
 };
 
 const Map = ({ images }: Props) => {
@@ -21,6 +23,23 @@ const Map = ({ images }: Props) => {
           {({ geographies }) =>
             geographies.map((geo) => <Geography className='country' key={geo.rsmKey} geography={geo} />)
           }
+        </Geographies>
+        <Geographies geography={hillshade.features}>
+          {({ geographies }) => {
+            return geographies.map((geo) => (
+              <Geography
+                fill={
+                  geo.id === 'layer-1'
+                    ? 'rgba(120,120,120,0.01)'
+                    : geo.id === 'layer-2'
+                    ? 'rgba(120,120,120,0.02)'
+                    : 'rgba(120,120,120,0.03)'
+                }
+                key={geo.rsmKey}
+                geography={geo}
+              />
+            ));
+          }}
         </Geographies>
         {Object.entries(images).map((img) => (
           <Marker key={img[0]} coordinates={[img[1].location.lon, img[1].location.lat]}>

@@ -1,9 +1,10 @@
 import { Paper, Zoom } from '@mui/material';
 import React from 'react';
+import { StoredImage } from '../../App';
 import './style.scss';
 
 type Props = {
-  images: { [key: string]: { url: string; location: { lat: number; lon: number } } };
+  images: StoredImage;
 };
 
 const ImageModal = ({ images }: Props) => {

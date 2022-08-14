@@ -1,7 +1,9 @@
 #map {
   height: 100%;
   width: 100%;
-  background-color: rgb(55, 66, 91);
+  background-image: url('../../assets/images/waves.jpg');
+  background-size: 400px;
+  background-repeat: repeat;
 
   .country {
     fill: rgb(24, 26, 28);

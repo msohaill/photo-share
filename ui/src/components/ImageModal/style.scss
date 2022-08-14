@@ -6,13 +6,15 @@
   .image-paper {
     height: 70vh;
     width: 300px;
+    padding: 15px 0;
+
+    background-color: rgb(24, 26, 28);
+    color: rgb(255, 254, 232);
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    padding: 20px;
 
     .images {
       position: relative;
