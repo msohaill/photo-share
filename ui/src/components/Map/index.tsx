@@ -30,10 +30,10 @@ const Map = ({ images }: Props) => {
               <Geography
                 fill={
                   geo.id === 'layer-1'
-                    ? 'rgba(120,120,120,0.01)'
+                    ? 'rgba(10,10,10,0.01)'
                     : geo.id === 'layer-2'
-                    ? 'rgba(120,120,120,0.02)'
-                    : 'rgba(120,120,120,0.03)'
+                    ? 'rgba(10,10,10,0.02)'
+                    : 'rgba(10,10,10,0.03)'
                 }
                 key={geo.rsmKey}
                 geography={geo}

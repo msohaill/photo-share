@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+
 .modal-container {
   height: 60vh;
   width: 70vw;
@@ -12,12 +14,42 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 10px;
+    gap: 100px;
 
     background-color: rgba(24, 26, 28, 0.9);
     color: rgb(255, 254, 232);
 
-    text-align: center;
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 20px;
+
+      .caption-input {
+        background-color: rgba(255, 254, 232, 0.2);
+      }
+
+      #caption-submit {
+        height: 56px;
+        background-color: rgb(255, 254, 232);
+        padding: 0px;
+
+        svg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          font-size: 20pt;
+
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
   }
 }
 
@@ -34,9 +66,24 @@
 
 @media (max-width: 800px) {
   .modal-container {
+    width: 90%;
+    height: 40%;
+
     .submission-modal {
+      justify-content: center;
+      gap: 30px;
+
       h1 {
-        font-size: 20pt;
+        margin-top: 30px;
+        font-size: 12pt;
+      }
+
+      .input-group {
+        .caption-input {
+          * {
+            font-size: 10pt;
+          }
+        }
       }
     }
   }

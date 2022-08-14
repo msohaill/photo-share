@@ -10,4 +10,7 @@ export default createTheme({
       secondary: '#fffee8',
     },
   },
+  typography: {
+    fontFamily: 'Ubuntu, sans-serif',
+  },
 });
