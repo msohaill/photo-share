@@ -10,7 +10,7 @@ type Props = {
 const ImageModal = ({ images }: Props) => {
   return (
     <div className='image-modal'>
-      <Zoom in={!!Object.keys(images).length}>
+      <Zoom in={!!Object.keys(images).length} unmountOnExit mountOnEnter>
         <Paper className='image-paper'>
           <div className='images'>
             {Object.entries(images).map((img) => (

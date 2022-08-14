@@ -13,10 +13,12 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen }: Props) => {
   return (
     <Modal open={modalOpen} onClose={() => setModalOpen(false)} container={document.getElementsByClassName('app')[0]}>
       <>
-        <Paper className='modal-element'>
-          <h1>What words would you like to share?</h1>
-          <TextField id='filled-basic' label='Enter a caption' variant='filled' color='secondary' />
-        </Paper>
+        <div className='modal-container'>
+          <Paper className='submission-modal'>
+            <h1>What words would you like to share?</h1>
+            <TextField id='filled-basic' label='Enter a caption' variant='filled' color='primary' />
+          </Paper>
+        </div>
         <CloseRounded id='modal-close' onClick={() => setModalOpen(false)} />
       </>
     </Modal>
