@@ -3,7 +3,6 @@ import { Paper } from '@mui/material';
 import { useState } from 'react';
 import './style.scss';
 
-// eslint-disable-next-line no-unused-vars
 const FileDrawer = ({ handleSubmission }: { handleSubmission: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 

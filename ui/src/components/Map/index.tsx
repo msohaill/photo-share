@@ -12,6 +12,8 @@ const Map = ({ images }: Props) => {
   const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
   const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
+  console.log(images);
+
   useEffect(() => {
     window.onresize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });
   });

@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import './App.scss';
-import socketClient from 'socket.io-client';
-// import Compressor from 'compressorjs';
 import Header from './components/Header';
 import Map from './components/Map';
 import FileDrawer from './components/FileDrawer';
 import ImageModal from './components/ImageModal';
 import SubmissionModal from './components/SubmissionModal';
+import socket from './socket-io';
+import { useEffect, useState } from 'react';
+import './App.scss';
 
-const server = process.env.REACT_APP_APP_SERVER || 'http://localhost:8080';
-const socket = socketClient(server, { withCredentials: true });
-
-type Image = {
+export type Image = {
   publicId: string;
   url: string;
   location: {
@@ -35,23 +31,22 @@ function App() {
   const [submissionModalOpen, setSubmissionModalOpen] = useState(false);
   const [file, setFile] = useState<File>(new File([], 'X'));
 
-  useEffect(() => {
-    socket.on('connection', () => {
-      console.log('Connected with the backend');
-    });
+  const handleImageDisplay = (publicId: string, url: string, location: { lat: number; lon: number }) => {
+    setImages((prevImages) => ({ ...prevImages, [publicId]: { url: url, location } }));
+    setTimeout(
+      () =>
+        setImages((prevImages) => {
+          const newImages = { ...prevImages };
+          delete newImages[publicId];
+          return newImages;
+        }),
+      30000
+    );
+  };
 
-    socket.on('image', (img: Image) => {
-      setImages((prevImages) => ({ ...prevImages, [img.publicId]: { url: img.url, location: img.location } }));
-      setTimeout(
-        () =>
-          setImages((prevImages) => {
-            const newImages = { ...prevImages };
-            delete newImages[img.publicId];
-            return newImages;
-          }),
-        30000
-      );
-    });
+  useEffect(() => {
+    socket.on('connection', () => console.log('Connected with the backend'));
+    socket.on('image', (img: Image) => handleImageDisplay(img.publicId, img.url, img.location));
 
     return () => {
       socket.off('connection');
@@ -129,7 +124,12 @@ function App() {
       <FileDrawer handleSubmission={openSubmissionModal} />
       <ImageModal images={images} />
 
-      <SubmissionModal modalOpen={submissionModalOpen} setModalOpen={setSubmissionModalOpen} file={file} />
+      <SubmissionModal
+        modalOpen={submissionModalOpen}
+        setModalOpen={setSubmissionModalOpen}
+        file={file}
+        handleDisplay={handleImageDisplay}
+      />
     </div>
   );
 }
