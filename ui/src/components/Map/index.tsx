@@ -22,9 +22,17 @@ const Map = ({ images }: Props) => {
             geographies.map((geo) => <Geography className='country' key={geo.rsmKey} geography={geo} />)
           }
         </Geographies>
-        {Object.values(images).map((img) => (
-          <Marker key={img.url} coordinates={[img.location.lon, img.location.lat]}>
-            <circle className='img-marker' r={2} />
+        {Object.entries(images).map((img) => (
+          <Marker key={img[0]} coordinates={[img[1].location.lon, img[1].location.lat]}>
+            <circle
+              className='img-marker'
+              r={2}
+              onClick={() =>
+                document
+                  .getElementsByClassName('images')[0]
+                  .scrollTo({ left: document.getElementById(img[0])?.offsetLeft })
+              }
+            />
           </Marker>
         ))}
       </ZoomableGroup>

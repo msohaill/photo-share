@@ -5,6 +5,7 @@ import Compressor from 'compressorjs';
 import Header from './components/Header';
 import Map from './components/Map';
 import FileDrawer from './components/FileDrawer';
+import ImageModal from './components/ImageModal';
 
 const server = process.env.REACT_APP_APP_SERVER || 'http://localhost:8080';
 const socket = socketClient(server, { withCredentials: true });
@@ -103,8 +104,8 @@ function App() {
       <Header />
 
       <Map images={images} />
-
       <FileDrawer handleUpload={handleUpload} />
+      <ImageModal images={images} />
     </div>
   );
 }

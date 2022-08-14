@@ -22,7 +22,7 @@ const FileDrawer = ({ handleUpload }: { handleUpload: (e: React.ChangeEvent<HTML
   return (
     <div className='drawer-container'>
       <Paper className='drawer' elevation={9}>
-        {drawerOpen ? <ExpandMore className='drawer-close' onClick={() => toggleDrawer(false)} /> : null}
+        {drawerOpen && <ExpandMore className='drawer-close' onClick={() => toggleDrawer(false)} />}
         <div className='drawer-open' onClick={() => toggleDrawer(true)}>
           <PhotoCameraBack />
           <p>Add a thousand words</p>

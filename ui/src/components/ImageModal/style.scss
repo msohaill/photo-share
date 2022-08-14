@@ -1,0 +1,47 @@
+.image-modal {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+
+  .image-paper {
+    height: 70vh;
+    width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    .images {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      width: 90%;
+      height: 90%;
+
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+
+      .image-holder {
+        width: 100%;
+        max-height: 100%;
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .modal-img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+}
