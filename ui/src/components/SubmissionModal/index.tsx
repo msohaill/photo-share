@@ -29,7 +29,7 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
   };
 
   const uploadImage = () => {
-    if (caption === '') {
+    if (!caption.trim().length) {
       setErrorText('Please input a caption');
       return;
     }
@@ -63,10 +63,10 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
                 url: data.url,
                 publicId: data.publicId,
                 location,
-                caption,
+                caption: caption.trim(),
               });
 
-              handleDisplay({ publicId: data.publicId, url: data.url, location, caption });
+              handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
               setCaption('');
             })
             .catch(() => setErrorBarOpen(true));
@@ -97,6 +97,7 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
                   onChange={handleInputChange}
                   error={!!errorText}
                   helperText={errorText}
+                  inputProps={{ maxLength: 50 }}
                 />
                 <Button endIcon={<Done />} id='caption-submit' onClick={uploadImage} />
               </div>
