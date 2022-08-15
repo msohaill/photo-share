@@ -7,32 +7,29 @@ import socket from './socket-io';
 import { useEffect, useState } from 'react';
 import './App.scss';
 
-export type Image = {
+export type EmitImage = {
   publicId: string;
   url: string;
   location: {
     lat: number;
     lon: number;
   };
+  caption: string;
 };
 
 export type StoredImage = {
-  [key: string]: {
-    url: string;
-    location: {
-      lat: number;
-      lon: number;
-    };
-  };
+  [key: string]: Omit<EmitImage, 'publicId'>;
 };
+
+export type ResponseImage = Omit<EmitImage, 'location' | 'caption'>;
 
 function App() {
   const [images, setImages] = useState<StoredImage>({});
   const [submissionModalOpen, setSubmissionModalOpen] = useState(false);
   const [file, setFile] = useState<File>(new File([], 'X'));
 
-  const handleImageDisplay = (publicId: string, url: string, location: { lat: number; lon: number }) => {
-    setImages((prevImages) => ({ ...prevImages, [publicId]: { url: url, location } }));
+  const handleImageDisplay = ({ publicId, url, location, caption }: EmitImage) => {
+    setImages((prevImages) => ({ ...prevImages, [publicId]: { url: url, location, caption } }));
     setTimeout(
       () =>
         setImages((prevImages) => {
@@ -40,13 +37,13 @@ function App() {
           delete newImages[publicId];
           return newImages;
         }),
-      30000
+      60000
     );
   };
 
   useEffect(() => {
     socket.on('connection', () => console.log('Connected with the backend'));
-    socket.on('image', (img: Image) => handleImageDisplay(img.publicId, img.url, img.location));
+    socket.on('image', (img: EmitImage) => handleImageDisplay(img));
 
     return () => {
       socket.off('connection');
@@ -54,63 +51,11 @@ function App() {
     };
   }, []);
 
-  // const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!e.target.files?.length) return;
-
-  //   const file = e.target.files[0];
-
-  //   new Compressor(file, {
-  //     quality: 0.2,
-  //     success: (res) => {
-  //       const reader = new FileReader();
-
-  //       reader.onloadend = () => {
-  //         const opts = {
-  //           method: 'POST',
-  //           body: JSON.stringify({ image: reader.result }),
-  //           headers: { 'Content-Type': 'application/json' },
-  //         };
-
-  //         fetch(`${server}/images`, opts)
-  //           .then((response) => {
-  //             if (response.ok) return response.json();
-  //             else throw new Error('Could not upload image');
-  //           })
-  //           .then((data: Image) => {
-  //             const location = {
-  //               lat: Math.floor(Math.random() * 180) - 90,
-  //               lon: Math.floor(Math.random() * 360) - 180,
-  //             };
-
-  //             socket.emit('image', {
-  //               url: data.url,
-  //               publicId: data.publicId,
-  //               location,
-  //             });
-
-  //             setImages((prevImages) => ({ ...prevImages, [data.publicId]: { url: data.url, location } }));
-  //             setTimeout(
-  //               () =>
-  //                 setImages((prevImages) => {
-  //                   const newImages = { ...prevImages };
-  //                   delete newImages[data.publicId];
-  //                   return newImages;
-  //                 }),
-  //               300000
-  //             );
-  //           })
-  //           .catch((err) => console.log(err));
-  //       };
-
-  //       reader.readAsDataURL(res);
-  //     },
-  //   });
-  // };
-
   const openSubmissionModal = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
 
     const file = e.target.files[0];
+    e.target.value = '';
 
     setSubmissionModalOpen(true);
     setFile(file);

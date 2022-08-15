@@ -5,4 +5,5 @@ export type Image = {
     lat: number;
     lon: number;
   };
+  caption: string;
 };

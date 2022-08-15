@@ -12,15 +12,13 @@ const Map = ({ images }: Props) => {
   const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
   const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
-  console.log(images);
-
   useEffect(() => {
     window.onresize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });
   });
 
   return (
     <ComposableMap id='map' width={dimensions.width} height={dimensions.height} projection='geoMercator'>
-      <ZoomableGroup center={[0, 30]} zoom={1.5} minZoom={1.5}>
+      <ZoomableGroup center={[0, 30]} zoom={1.5} minZoom={1} maxZoom={100}>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => <Geography className='country' key={geo.rsmKey} geography={geo} />)

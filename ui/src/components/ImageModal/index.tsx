@@ -16,10 +16,10 @@ const ImageModal = ({ images }: Props) => {
             {Object.entries(images).map((img) => (
               <div key={img[0]} className='image-holder' id={img[0]}>
                 <img src={img[1].url} className='modal-img' />
+                <p>{img[1].caption}</p>
               </div>
             ))}
           </div>
-          <p>caption</p>
         </Paper>
       </Zoom>
     </div>
