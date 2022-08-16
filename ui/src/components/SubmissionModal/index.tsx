@@ -69,7 +69,10 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
               handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
               setCaption('');
             })
-            .catch(() => setErrorBarOpen(true));
+            .catch(() => {
+              setCaption('');
+              setErrorBarOpen(true);
+            });
         };
 
         reader.readAsDataURL(res);

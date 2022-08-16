@@ -18,8 +18,8 @@ const Map = ({ images }: Props) => {
 
   return (
     <ComposableMap id='map' width={dimensions.width} height={dimensions.height} projection='geoMercator'>
-      <ZoomableGroup center={[0, 30]} zoom={1.5} minZoom={1} maxZoom={100}>
-        <Geographies geography={geoUrl}>
+      <ZoomableGroup center={[0, 30]} zoom={1.5} minZoom={1} maxZoom={100} style={{ outline: 'none' }}>
+        <Geographies geography={geoUrl} style={{ outline: 'none' }}>
           {({ geographies }) =>
             geographies.map((geo) => <Geography className='country' key={geo.rsmKey} geography={geo} />)
           }
@@ -43,15 +43,7 @@ const Map = ({ images }: Props) => {
         </Geographies>
         {Object.entries(images).map((img) => (
           <Marker key={img[0]} coordinates={[img[1].location.lon, img[1].location.lat]}>
-            <circle
-              className='img-marker'
-              r={2}
-              onClick={() =>
-                document
-                  .getElementsByClassName('images')[0]
-                  .scrollTo({ left: document.getElementById(img[0])?.offsetLeft })
-              }
-            />
+            <circle className='img-marker' r={2} />
           </Marker>
         ))}
       </ZoomableGroup>

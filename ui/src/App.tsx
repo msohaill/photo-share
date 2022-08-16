@@ -25,6 +25,7 @@ export type ResponseImage = Omit<EmitImage, 'location' | 'caption'>;
 
 function App() {
   const [images, setImages] = useState<StoredImage>({});
+  const [imageModalOpen, setImageModalOpen] = useState(false);
   const [submissionModalOpen, setSubmissionModalOpen] = useState(false);
   const [file, setFile] = useState<File>(new File([], 'X'));
 
@@ -35,9 +36,11 @@ function App() {
         setImages((prevImages) => {
           const newImages = { ...prevImages };
           delete newImages[publicId];
+
+          !Object.keys(newImages).length && setImageModalOpen(false);
           return newImages;
         }),
-      60000
+      30000
     );
   };
 
@@ -67,7 +70,7 @@ function App() {
 
       <Map images={images} />
       <FileDrawer handleSubmission={openSubmissionModal} />
-      <ImageModal images={images} />
+      <ImageModal images={images} open={imageModalOpen} setOpen={setImageModalOpen} />
 
       <SubmissionModal
         modalOpen={submissionModalOpen}
