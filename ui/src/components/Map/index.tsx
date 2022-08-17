@@ -21,10 +21,17 @@ const Map = ({ images }: Props) => {
       <ZoomableGroup center={[0, 30]} zoom={1.5} minZoom={1} maxZoom={100} style={{ outline: 'none' }}>
         <Geographies geography={geoUrl} style={{ outline: 'none' }}>
           {({ geographies }) =>
-            geographies.map((geo) => <Geography className='country' key={geo.rsmKey} geography={geo} />)
+            geographies.map((geo) => (
+              <Geography
+                className='country'
+                key={geo.rsmKey}
+                geography={geo}
+                style={{ default: { outline: 'none' } }}
+              />
+            ))
           }
         </Geographies>
-        <Geographies geography={hillshade.features}>
+        <Geographies geography={hillshade.features} style={{ outline: 'none' }}>
           {({ geographies }) => {
             return geographies.map((geo) => (
               <Geography
@@ -37,6 +44,7 @@ const Map = ({ images }: Props) => {
                 }
                 key={geo.rsmKey}
                 geography={geo}
+                style={{ default: { outline: 'none' } }}
               />
             ));
           }}
