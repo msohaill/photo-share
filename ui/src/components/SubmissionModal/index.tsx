@@ -68,8 +68,8 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
                   handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
                   setCaption('');
                 },
-                () => {
-                  throw new Error('Could not retrieve location');
+                (e) => {
+                  console.log(e);
                 }
               );
             })
