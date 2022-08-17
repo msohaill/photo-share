@@ -15,6 +15,6 @@ export const imageHandler = (socket: Socket) => {
           logger.info('Image deleted', { publicId: img.publicId });
         }
       });
-    }, 30000);
+    }, 90000);
   });
 };

@@ -40,7 +40,7 @@ function App() {
           !Object.keys(newImages).length && setImageModalOpen(false);
           return newImages;
         }),
-      300000
+      90000
     );
   };
 
