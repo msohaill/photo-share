@@ -68,8 +68,9 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
                   handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
                   setCaption('');
                 },
-                (e) => {
-                  console.log(e);
+                () => {
+                  setCaption('');
+                  setErrorBarOpen(true);
                 }
               );
             })
