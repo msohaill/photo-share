@@ -1,5 +1,5 @@
 import { DoubleArrow } from '@mui/icons-material';
-import { Button, Paper, Slide } from '@mui/material';
+import { Paper, Slide } from '@mui/material';
 import { StoredImage } from '../../App';
 import './style.scss';
 
@@ -18,7 +18,12 @@ const ImageModal = ({ images, open, setOpen }: Props) => {
             <div className='images'>
               {Object.entries(images).map((img) => (
                 <div key={img[0]} className='image-holder' id={img[0]}>
-                  <img src={img[1].url} className='modal-img' />
+                  <div className='img-loc-holder'>
+                    <img src={img[1].url} className='modal-img' />
+                    <p className='img-location'>
+                      {`${img[1].location.lat.toFixed(2)}, ${img[1].location.lon.toFixed(2)}`}
+                    </p>
+                  </div>
                   <p>{img[1].caption}</p>
                 </div>
               ))}
@@ -26,14 +31,15 @@ const ImageModal = ({ images, open, setOpen }: Props) => {
           </Paper>
         </Slide>
         {Object.keys(images).length ? (
-          <Button
+          <div
             onClick={(e) => {
               setOpen((prevOpen) => !prevOpen);
               e.currentTarget.classList.toggle('active-modal-open');
             }}
-            endIcon={<DoubleArrow />}
-            className='image-modal-open'
-          />
+            id='image-modal-open'
+          >
+            <DoubleArrow />
+          </div>
         ) : null}
       </div>
       {open ? <div id='modal-backdrop'></div> : null}

@@ -54,20 +54,24 @@ const SubmissionModal = ({ file, modalOpen, setModalOpen, handleDisplay }: Props
               else throw new Error('Could not upload image');
             })
             .then((data: ResponseImage) => {
-              const location = {
-                lat: Math.floor(Math.random() * 180) - 90,
-                lon: Math.floor(Math.random() * 360) - 180,
-              };
+              window.navigator.geolocation.getCurrentPosition(
+                (geoData) => {
+                  const location = { lat: geoData.coords.latitude, lon: geoData.coords.longitude };
 
-              socket.emit('image', {
-                url: data.url,
-                publicId: data.publicId,
-                location,
-                caption: caption.trim(),
-              });
+                  socket.emit('image', {
+                    url: data.url,
+                    publicId: data.publicId,
+                    location,
+                    caption: caption.trim(),
+                  });
 
-              handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
-              setCaption('');
+                  handleDisplay({ publicId: data.publicId, url: data.url, location, caption: caption.trim() });
+                  setCaption('');
+                },
+                () => {
+                  throw new Error('Could not retrieve location');
+                }
+              );
             })
             .catch(() => {
               setCaption('');

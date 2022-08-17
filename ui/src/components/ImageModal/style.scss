@@ -10,7 +10,7 @@
   .image-paper {
     height: 100%;
     width: 100%;
-    padding: 15px 0;
+    padding: 15px 0 0 0;
     pointer-events: all;
 
     background-color: rgb(24, 26, 28);
@@ -44,30 +44,73 @@
         align-items: center;
         text-align: center;
 
-        .modal-img {
+        .img-loc-holder {
+          max-height: 90%;
           max-width: 90%;
-          max-height: 80%;
-        }
+          position: relative;
+          flex: 0 1 0;
 
-        p {
-          margin: 20px;
+          .modal-img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+
+          .img-location {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8pt;
+
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2px 10px;
+          }
         }
+      }
+
+      &::-webkit-scrollbar {
+        height: 3px;
+        width: 0px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: white;
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-corner {
+        display: none;
       }
     }
   }
 
-  .image-modal-open {
+  #image-modal-open {
     position: absolute;
     pointer-events: all;
     top: 50%;
-    transform: translate(250px, -50%);
-    color: rgb(207, 96, 89);
-    transition: transform 195ms cubic-bezier(0.4, 0, 0.6, 1);
+    transform: translate(270px, -50%) rotate(180deg);
+    transition: transform 195ms cubic-bezier(0.4, 0, 0.6, 1), background-color 100ms linear;
+    background-color: rgb(24, 26, 28);
+    border-radius: 3px;
+    height: 60px;
+    width: 35px;
+
+    &:hover {
+      background-color: rgb(60, 48, 48);
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: rgb(207, 96, 89);
+      transform: translate(-50%, -50%);
+    }
   }
 
   .active-modal-open {
-    transform: translate(-70px, -50%) !important;
-    transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) !important;
+    transform: translate(-50px, -50%) !important;
+    transition: transform 225ms cubic-bezier(0, 0, 0.2, 1), background-color 100ms linear !important;
   }
 }
 
@@ -87,13 +130,16 @@
     right: 50%;
     top: 50%;
     transform: translate(50%, -50%);
+    width: 70%;
 
-    .image-modal-open {
-      transform: translate(calc(80px + 50vw), -50%);
+    #image-modal-open {
+      transform: translate(calc(85vw - 40px), -50%) rotate(180deg);
+      height: 40px;
+      width: 30px;
     }
 
     .active-modal-open {
-      transform: translate(-50px, -50%) !important;
+      transform: translate(-40px, -50%) !important;
     }
   }
 
