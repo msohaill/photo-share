@@ -45,11 +45,9 @@ function App() {
   };
 
   useEffect(() => {
-    socket.on('connection', () => console.log('Connected with the backend'));
     socket.on('image', (img: EmitImage) => handleImageDisplay(img));
 
     return () => {
-      socket.off('connection');
       socket.off('image');
     };
   }, []);
